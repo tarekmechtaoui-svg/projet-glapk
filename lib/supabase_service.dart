@@ -29,14 +29,49 @@ class SupabaseService {
   static User? get currentUser => client.auth.currentUser;
 
   // -------------------------
-  // ROOMS
+  // HOTELS
   // -------------------------
-  static Future<List<Room>> getRooms() async {
+  static Future<List<Hotel>> getHotels() async {
     try {
       final data = await client
-          .from('rooms')
+          .from('hotels')
           .select()
-          .order('number');
+          .order('rating', ascending: false);
+
+      return (data as List)
+          .map((e) => Hotel.fromMap(e as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw Exception("Error loading hotels: $e");
+    }
+  }
+
+  static Future<Hotel> getHotelById(String hotelId) async {
+    try {
+      final data = await client
+          .from('hotels')
+          .select()
+          .eq('id', hotelId)
+          .single();
+
+      return Hotel.fromMap(data);
+    } catch (e) {
+      throw Exception("Error loading hotel: $e");
+    }
+  }
+
+  // -------------------------
+  // ROOMS
+  // -------------------------
+  static Future<List<Room>> getRooms({String? hotelId}) async {
+    try {
+      var query = client.from('rooms').select().order('number');
+
+      if (hotelId != null) {
+        query = query.eq('hotel_id', hotelId);
+      }
+
+      final data = await query;
 
       return (data as List)
           .map((e) => Room.fromMap(e as Map<String, dynamic>))

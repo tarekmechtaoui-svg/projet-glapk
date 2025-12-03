@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'screens/rooms_list.dart';
+import 'screens/hotels_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
-    url: 'https://wsbahuwdqisafgvxkwfc.supabase.co', // replace with test URL if needed
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzYmFodXdkcWlzYWZndnhrd2ZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxNzAwNDQsImV4cCI6MjA3OTc0NjA0NH0.YeCy3Ll9DkTyxSqlwbgoifhMMtYpSuPNKJ17visqKwU', // replace with test anon key if needed
+    url: 'https://wsbahuwdqisafgvxkwfc.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzYmFodXdkcWlzYWZndnhrd2ZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxNzAwNDQsImV4cCI6MjA3OTc0NjA0NH0.YeCy3Ll9DkTyxSqlwbgoifhMMtYpSuPNKJ17visqKwU',
   );
 
   runApp(const MyApp());
@@ -18,9 +18,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Reservation App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const RoomsListScreen(), // skip splash/login and go directly
+      title: 'Hotel Reservation App',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.grey[50],
+        fontFamily: 'Roboto',
+      ),
+      home: const HotelsListScreen(),
     );
   }
 }

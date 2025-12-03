@@ -1,6 +1,34 @@
 // lib/models.dart
+class Hotel {
+  final String id;
+  final String name;
+  final String? description;
+  final String? address;
+  final double rating;
+  final String? imageUrl;
+
+  Hotel({
+    required this.id,
+    required this.name,
+    this.description,
+    this.address,
+    required this.rating,
+    this.imageUrl,
+  });
+
+  factory Hotel.fromMap(Map<String, dynamic> m) => Hotel(
+        id: m['id'].toString(),
+        name: m['name'] ?? '',
+        description: m['description'],
+        address: m['address'],
+        rating: m['rating'] is num ? (m['rating'] as num).toDouble() : 0.0,
+        imageUrl: m['image_url'],
+      );
+}
+
 class Room {
   final String id;
+  final String hotelId;
   final String number;
   final String? category;
   final int beds;
@@ -8,6 +36,7 @@ class Room {
 
   Room({
     required this.id,
+    required this.hotelId,
     required this.number,
     this.category,
     required this.beds,
@@ -16,6 +45,7 @@ class Room {
 
   factory Room.fromMap(Map<String, dynamic> m) => Room(
         id: m['id'].toString(),
+        hotelId: m['hotel_id'].toString(),
         number: m['number'] ?? '',
         category: m['category'],
         beds: m['beds'] is num ? (m['beds'] as num).toInt() : 0,
